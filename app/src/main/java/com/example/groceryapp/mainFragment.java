@@ -13,15 +13,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.groceryapp.Models.GroceryItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class mainFragment extends Fragment {
     private static final String TAG = "mainFragment";
 
+    private Util util;
+
+    private RecyclerView newRecVw,popRecVw,sugtRecVw;
     private BottomNavigationView bottomNavigationView;
+
+    private GroceryItem_adapter newadapter,popadapter,sugtadapter;
 
     @Nullable
     @Override
@@ -30,8 +39,10 @@ public class mainFragment extends Fragment {
 
         initViews(view);
 
-//        Util util=new Util();
-//        util.initDatabase(getContext());
+        util=new Util();
+        util.initDatabase(getActivity());
+
+
 //        SharedPreferences sharedPreferences=getActivity()
 //                .getSharedPreferences("fake_database", Context.MODE_PRIVATE);
 //        String returnedValue=sharedPreferences.getString("cheese","");
@@ -39,10 +50,32 @@ public class mainFragment extends Fragment {
 //        GroceryItem cheese=gson.fromJson(returnedValue,GroceryItem.class);
 
 
+        initrecyVw();
+
         clickBottomNavigation();
 
         return view;
 
+    }
+
+    private void initrecyVw(){
+
+        newadapter=new GroceryItem_adapter(getActivity());
+        popadapter=new GroceryItem_adapter(getActivity());
+        sugtadapter=new GroceryItem_adapter(getActivity());
+
+        newRecVw.setAdapter(newadapter);
+        popRecVw.setAdapter(popadapter);
+        sugtRecVw.setAdapter(sugtadapter);
+
+        newRecVw.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        popRecVw.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+        sugtRecVw.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
+
+        ArrayList<GroceryItem> allItems=util.getAllitems(getActivity());
+        if(allItems!=null){
+            newadapter.setList(allItems);
+        }
 
     }
 
@@ -58,12 +91,11 @@ public class mainFragment extends Fragment {
                         break;
                     case R.id.search:
                         break;
-                    case R.id.home:
+                    case R.id.homeActivity:
                         Toast.makeText(getContext(), "Home selected", Toast.LENGTH_SHORT).show();
                         break;
                     default:break;
                 }
-
                 return true;
             }
         });
@@ -71,6 +103,10 @@ public class mainFragment extends Fragment {
 
     private void initViews(View view){
 
-        bottomNavigationView= (BottomNavigationView) view.findViewById(R.id.bottom_navigationPanel);
+        bottomNavigationView=view.findViewById(R.id.bottom_navigationPanel);
+        newRecVw=view.findViewById(R.id.recyclerNew);
+        popRecVw=view.findViewById(R.id.recyclerPop);
+        sugtRecVw=view.findViewById(R.id.recyclerSugt);
+
     }
 }

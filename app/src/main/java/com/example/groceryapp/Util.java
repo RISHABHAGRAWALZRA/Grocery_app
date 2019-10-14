@@ -22,6 +22,15 @@ public class Util {
         return id;
     }
 
+    public ArrayList<GroceryItem> getAllitems(Context context){
+
+        Gson gson=new Gson();
+        SharedPreferences sharedPreferences=context.getSharedPreferences("fake_database",Context.MODE_PRIVATE);
+        Type type=new TypeToken<ArrayList<GroceryItem>>(){}.getType();
+        ArrayList<GroceryItem> allItems=gson.fromJson(sharedPreferences.getString("allItems",null),type);
+        return allItems;
+    }
+
     public void initDatabase(Context context){
 
         SharedPreferences sharedPreferences=context.getSharedPreferences("fake_database",context.MODE_PRIVATE);

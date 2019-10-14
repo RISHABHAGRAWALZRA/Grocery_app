@@ -6,7 +6,7 @@
     android:layout_height="210dp"
     android:layout_margin="10dp"
     android:orientation="vertical"
-    app:cardBackgroundColor="@color/maincolorPrimary"
+    app:cardBackgroundColor="@color/maincolorAccent"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="TextView"
-            android:textColor="@color/maincolorAccent"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="bold" />
 

@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initViews();
 
-
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawer,toolbar,
                 R.string.drawer_open,R.string.drawer_closed);
