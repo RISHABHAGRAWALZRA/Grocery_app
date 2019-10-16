@@ -21,6 +21,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class mainFragment extends Fragment {
     private static final String TAG = "mainFragment";
@@ -72,11 +74,57 @@ public class mainFragment extends Fragment {
         popRecVw.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
         sugtRecVw.setLayoutManager(new LinearLayoutManager(getActivity(),RecyclerView.HORIZONTAL,false));
 
-        ArrayList<GroceryItem> allItems=util.getAllitems(getActivity());
-        if(allItems!=null){
-            newadapter.setList(allItems);
+        ArrayList<GroceryItem> newItems=util.getAllitems(getActivity());
+
+        Comparator<GroceryItem> newComparator=new Comparator<GroceryItem>() {
+            @Override
+            public int compare(GroceryItem groceryItem, GroceryItem t1) {
+                return (groceryItem.getId()-t1.getId())*(-1);
+            }
+        };
+
+//        Comparator<GroceryItem> reversenewComparator= Collections.reverseOrder(popularyComparator);
+        Collections.sort(newItems,newComparator);
+
+        if(newItems!=null){
+            newadapter.setList(newItems);
         }
 
+
+
+        ArrayList<GroceryItem> popularItems=util.getAllitems(getActivity());
+
+        Comparator<GroceryItem> popularyComparator=new Comparator<GroceryItem>() {
+            @Override
+            public int compare(GroceryItem groceryItem, GroceryItem t1) {
+                return (groceryItem.getPopularityPoint()-t1.getPopularityPoint())*(-1);
+            }
+        };
+
+//        Comparator<GroceryItem> reversepopularyComparator= Collections.reverseOrder(popularyComparator);
+        Collections.sort(popularItems,popularyComparator);
+
+        if(popularItems!=null){
+            popadapter.setList(popularItems);
+        }
+
+
+
+        ArrayList<GroceryItem> suggestedItems=util.getAllitems(getActivity());
+
+        Comparator<GroceryItem> suggestComparator=new Comparator<GroceryItem>() {
+            @Override
+            public int compare(GroceryItem groceryItem, GroceryItem t1) {
+                return (groceryItem.getUserPoint()-t1.getUserPoint())*(-1);
+            }
+        };
+
+//        Comparator<GroceryItem> reversesuggestComparator= Collections.reverseOrder(popularyComparator);
+        Collections.sort(suggestedItems,suggestComparator);
+
+        if(suggestedItems!=null){
+            sugtadapter.setList(suggestedItems);
+        }
     }
 
     private void clickBottomNavigation(){

@@ -44,7 +44,7 @@ public class Util {
             initallItems(context);
         }
 
-
+        initallItems(context);
     }
 
     private void initallItems(Context context){
@@ -199,14 +199,26 @@ public class Util {
         amt=80;
         allItems.add(new GroceryItem(name,desc,imgurl,cat,amt,price));
 
+        name="Ice-cream";
+        desc="Ice cream is a sweetened frozen food typically eaten as a snack or dessert.";
+        imgurl="https://hips.hearstapps.com/hmg-prod.s3." +
+                "amazonaws.com/images/easiest-ever-fruit-ice-cream-ghk-1532637317.jpg";
+        cat="Desert";
+        price=35.0;
+        amt=123;
+        GroceryItem iceCream=new GroceryItem(name,desc,imgurl,cat,amt,price);
+        iceCream.setPopularityPoint(10);
+        iceCream.setUserPoint(5);
+        allItems.add(iceCream);
 
         name="Soap";
         desc="";
         imgurl="https://cdn.shopify.com/s/files/1/1293/8895/products/white.jpg?v=1517504396";
         cat="Soap";
-        price=0.0;
+        price=15.0;
         amt=0;
         allItems.add(new GroceryItem(name,desc,imgurl,cat,amt,price));
+
 
         String finalstring=gson.toJson(allItems);
         editor.putString("allItems",finalstring);
